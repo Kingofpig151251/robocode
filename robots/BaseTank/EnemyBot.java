@@ -1,7 +1,6 @@
 package BaseTank;
 
 import robocode.*;
-
 public class EnemyBot {
 
 	// private data
@@ -37,18 +36,37 @@ public class EnemyBot {
 	}
 
 	public boolean shouldTrack(ScannedRobotEvent e, long closer) {
-		return  none() || e.getDistance() < getDistance() - closer ||
+		return none() || e.getDistance() < getDistance() - closer ||
 				e.getName().equals(getName());
 	}
 
-	public boolean none() { return name.equals(""); }
+	public boolean none() {
+		return name.equals("");
+	}
 
 	// accessor methods
-	public double getBearing()  { return bearing; }
-	public double getDistance() { return distance; }
-	public double getEnergy()   { return energy; }
-	public double getHeading()  { return heading; }
-	public String getName()     { return name; }
-	public double getVelocity() { return velocity; }
+	public double getBearing() {
+		return bearing;
+	}
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public double getEnergy() {
+		return energy;
+	}
+
+	public double getHeading() {
+		return heading;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public double getVelocity() {
+		return velocity;
+	}
 
 }
