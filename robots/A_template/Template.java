@@ -1,12 +1,12 @@
-package BaseTank;
+package A_template;
 
-import Lab02b.EnemyBot;
+import EnemyBot.EnemyBot;
 import robocode.*;
 //import java.awt.Color;
 
 // API help : https://robocode.sourceforge.io/docs/robocode/robocode/Robot.html
 
-abstract public class BaseTank extends AdvancedRobot {
+abstract public class Template extends AdvancedRobot {
 
 	EnemyBot enemy = new EnemyBot();
 	boolean enemyUpdated = false;

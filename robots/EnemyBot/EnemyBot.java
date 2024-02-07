@@ -1,4 +1,4 @@
-package Lab02b;
+package EnemyBot;
 
 import robocode.*;
 public class EnemyBot {

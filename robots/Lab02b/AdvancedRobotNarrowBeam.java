@@ -1,4 +1,5 @@
 package Lab02b;
+import EnemyBot.EnemyBot;
 import robocode.*;
 //import java.awt.Color;
 

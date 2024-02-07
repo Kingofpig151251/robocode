@@ -2,6 +2,9 @@ package Lab02b;
 
 import robocode.*;
 import java.awt.geom.Point2D;
+
+import EnemyBot.EnemyBot;
+
 import java.awt.Color;
 
 public class Strafer extends AdvancedRobot {
