@@ -1,4 +1,4 @@
-package Lab02b;
+package Lab02c;
 
 import robocode.*;
 import java.awt.geom.Point2D;
