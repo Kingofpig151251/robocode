@@ -1,4 +1,5 @@
-package lessons;
+package Lab02a;
+
 import robocode.*;
 //import java.awt.Color;
 
@@ -7,8 +8,7 @@ import robocode.*;
 /**
  * AdvancedBearingBot - a robot by (your name here)
  */
-public class AdvancedBearingBot extends AdvancedRobot
-{
+public class AdvancedBearingBot extends AdvancedRobot {
 	/**
 	 * run: AdvancedBearingBot's default behavior
 	 */
@@ -21,10 +21,10 @@ public class AdvancedBearingBot extends AdvancedRobot
 		// setColors(Color.red,Color.blue,Color.green); // body,gun,radar
 
 		// Robot main loop
-		while(true) {
+		while (true) {
 			// Replace the next 4 lines with any behavior you would like
-						setTurnRadarRight(360);
-						execute();
+			setTurnRadarRight(360);
+			execute();
 		}
 	}
 
@@ -33,10 +33,10 @@ public class AdvancedBearingBot extends AdvancedRobot
 	 */
 	public void onScannedRobot(ScannedRobotEvent e) {
 		// Replace the next line with any behavior you would like
-setTurnRight(e.getBearing());
+		setTurnRight(e.getBearing());
 		setFire(1);
-		setAhead(e.getDistance() + 5);	}
-	
+		setAhead(e.getDistance() + 5);
+	}
 
 	/**
 	 * onHitByBullet: What to do when you're hit by a bullet
@@ -45,12 +45,12 @@ setTurnRight(e.getBearing());
 		// Replace the next line with any behavior you would like
 		back(10);
 	}
-	
+
 	/**
 	 * onHitWall: What to do when you hit a wall
 	 */
 	public void onHitWall(HitWallEvent e) {
 		// Replace the next line with any behavior you would like
 		back(20);
-	}	
+	}
 }

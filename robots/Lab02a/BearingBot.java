@@ -1,4 +1,5 @@
-package lessons;
+package Lab02a;
+
 import robocode.*;
 //import java.awt.Color;
 
@@ -7,8 +8,7 @@ import robocode.*;
 /**
  * BearingBot - a robot by (your name here)
  */
-public class BearingBot extends Robot
-{
+public class BearingBot extends Robot {
 	/**
 	 * run: BearingBot's default behavior
 	 */
@@ -21,7 +21,7 @@ public class BearingBot extends Robot
 		// setColors(Color.red,Color.blue,Color.green); // body,gun,radar
 
 		// Robot main loop
-		while(true) {
+		while (true) {
 			// Replace the next 4 lines with any behavior you would like
 			turnRadarRight(360);
 		}
@@ -34,6 +34,7 @@ public class BearingBot extends Robot
 		// Replace the next line with any behavior you would like
 		turnRight(e.getBearing());
 		fire(1);
-		ahead(e.getDistance() + 5);	}
+		ahead(e.getDistance() + 5);
+	}
 
 }

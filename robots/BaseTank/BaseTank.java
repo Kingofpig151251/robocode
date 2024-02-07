@@ -1,4 +1,6 @@
 package BaseTank;
+
+import Lab02b.EnemyBot;
 import robocode.*;
 //import java.awt.Color;
 

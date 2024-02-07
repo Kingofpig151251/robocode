@@ -1,4 +1,5 @@
-package lessons;
+package Lab02a;
+
 import robocode.*;
 //import java.awt.Color;
 
@@ -7,8 +8,7 @@ import robocode.*;
 /**
  * MyFirstRobot - a robot by (your name here)
  */
-public class MyFirstRobot extends Robot
-{
+public class MyFirstRobot extends Robot {
 	/**
 	 * run: MyFirstRobot's default behavior
 	 */
@@ -21,7 +21,7 @@ public class MyFirstRobot extends Robot
 		// setColors(Color.red,Color.blue,Color.green); // body,gun,radar
 
 		// Robot main loop
-		while(true) {
+		while (true) {
 			// Replace the next 4 lines with any behavior you would like
 			ahead(100);
 			turnGunRight(360);
@@ -45,12 +45,12 @@ public class MyFirstRobot extends Robot
 		// Replace the next line with any behavior you would like
 		back(10);
 	}
-	
+
 	/**
 	 * onHitWall: What to do when you hit a wall
 	 */
 	public void onHitWall(HitWallEvent e) {
 		// Replace the next line with any behavior you would like
 		back(20);
-	}	
+	}
 }

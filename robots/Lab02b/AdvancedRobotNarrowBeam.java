@@ -1,5 +1,4 @@
 package Lab02b;
-import BaseTank.*;
 import robocode.*;
 //import java.awt.Color;
 

@@ -1,4 +1,4 @@
-package BaseTank;
+package Lab02b;
 
 import robocode.*;
 public class EnemyBot {
