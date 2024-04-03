@@ -1,0 +1,22 @@
+{
+    "files.exclude": {
+        "battles": true,
+        "compilers": true,
+        "config": true,
+        "desktop": true,
+        "license": true,
+        "roborumble": true,
+        "theme": true,
+        "meleerumble.bat": true,
+        "ReadMe.*": true,
+        "robocode.*": true,
+        "roborumble.*": true,
+        "teamrumble.bat": true,
+        "twinduel.bat": true,
+        "versions.md": true
+    },
+    "java.project.sourcePaths": ["robots"],
+    "java.project.referencedLibraries": [
+        "libs/**/*.jar"
+    ]
+}
