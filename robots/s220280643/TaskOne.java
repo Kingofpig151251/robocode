@@ -1,4 +1,4 @@
-package s220280643;
+package s123456789;
 
 import robocode.*;
 
@@ -27,7 +27,6 @@ public class TaskOne extends AdvancedRobot {
 
     private void doRadar() {
         // TODO: Keep turning radar for onScannedRobot events
-        
     }
 
     private void doGun() {
