@@ -26,40 +26,30 @@ public class TaskOne extends AdvancedRobot {
     }
 
     private void doRadar() {
-        // Turn the radar for a full sweep
-        turnRadarRight(360);
+        // TODO: Keep turning radar for onScannedRobot events
+        
     }
 
     private void doGun() {
-        if (targetUpdated) {
-            // Calculate the angle to turn the gun
-            double gunTurnAngle = getHeading() + target.getBearing() - getGunHeading();
-                    // Turn the gun and fire
-                    turnGunRight(gunTurnAngle);
-            fire(1);
-            targetUpdated = false;
-        }
+        // TODO: If target is updated, adjust gun turn and fire bullet when possible
     }
 
     private void doMove() {
-        // Move towards the target
-        ahead(100);
-        // If the robot hits a wall, turn a certain degree and move forward, then turn back
+        // TODO: Move handling
+        // If Evader is alive, we chase the Evader
+        // Else chase any target
     }
 
     @Override
     public void onScannedRobot(ScannedRobotEvent event) {
-        // Check if the scanned robot is a target
-        if (event.getName().contains("Walls")) {
-            // Update the target's position
-            targetUpdated = true;
-            // Save other necessary information about the target (e.g., distance, bearing,
-            // velocity)
-        }
+        // TODO: Scan handling
+        // If Evader is alive, we only record the state of Evader
+        // Else update taget by distance to the scanned robot.
+        // Hint: Use (event.getName().contains("Evader")) to check if the scanned robot is evader
     }
 
     @Override
     public void onRobotDeath(RobotDeathEvent event) {
-        // TODO: Check if the Evader has died, so we can attack other robots
+        // TODO: Check if the Evader has died, so we can attack other robots 
     }
 }
