@@ -54,17 +54,10 @@ public class TaskTwo extends AdvancedRobot {
     private void doGun() {
         // TODO: If target is updated, adjust gun turn and fire bullet when possible
         if (targetUpdated) {
-            long time = (long) (target.getDistance() / (20 - 3 * Math.min(400 / target.getDistance(), 3)));
-            double futureX = target.getFutureX(time);
-            double futureY = target.getFutureY(time);
-            double theta = Math.toDegrees(Math.atan2(futureX - getX(), futureY - getY()));
-
-            if (getGunHeat() == 0 && Math.abs(getGunTurnRemaining()) < 30) {
-                setTurnGunRight(normalizeBearing(theta - getGunHeading()));
-                if (Math.abs(getGunTurnRemaining()) < 10) {
-                    setFire(Math.min(400 / target.getDistance(), 3));
-                }
-            }
+            double turn = getHeading() - getGunHeading() + target.getBearing();
+            setTurnGunRight(normalizeBearing(turn));
+            if (getGunHeat() == 0 && Math.abs(getGunTurnRemaining()) < 10 )
+                setFire(Math.min(400 / target.getDistance(), 3));
         }
     }
 
@@ -75,6 +68,7 @@ public class TaskTwo extends AdvancedRobot {
                 moveState = MoveState.FIND_WALL;
                 break;
             case FIND_WALL:
+                System.out.println("Finding wall");
                 double distToTopWall = getBattleFieldHeight() - getY();
                 double distToBottomWall = getY();
                 double distToLeftWall = getX();
@@ -92,14 +86,10 @@ public class TaskTwo extends AdvancedRobot {
                 } else if (minDist == distToRightWall) {
                     setTurnRight(normalizeBearing(90 - getHeading()));
                 }
-
                 setAhead(moveAmount);
                 break;
             case MOVE_ALONG_WALL:
                 setAhead(moveAmount);
-                if (getDistanceRemaining() == 0) {
-                    moveState = MoveState.CORNER_TURN;
-                }
                 break;
             case CORNER_TURN:
                 if (!hasTurned) {
@@ -124,7 +114,7 @@ public class TaskTwo extends AdvancedRobot {
     public void onScannedRobot(ScannedRobotEvent event) {
         // TODO: Scan handling
         // Update existing target, or switch target based on distance (closer)
-        if (target.none() || event.getDistance() < target.getDistance()) {
+        if ((target.none() || event.getDistance() < target.getDistance())) {
             target.update(event, this);
             targetUpdated = true;
         }
@@ -140,7 +130,9 @@ public class TaskTwo extends AdvancedRobot {
     @Override
     public void onHitRobot(HitRobotEvent event) {
         // TODO: Collect information about the crash
-        moveState = MoveState.CRASH;
+        if (moveState != MoveState.FIND_WALL) {
+            moveState = MoveState.CRASH;
+        }
     }
 
     @Override
