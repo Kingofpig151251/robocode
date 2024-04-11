@@ -13,6 +13,7 @@ public class TaskTwo extends AdvancedRobot {
         CRASH, // Crash - Unstuck myself when we hit something
     }
 
+    private MeleeRadar meleeRadar =new MeleeRadar(this);
     private AdvancedEnemyBot target = new AdvancedEnemyBot();
     private boolean targetUpdated;
     private MoveState moveState = MoveState.IDLE;
