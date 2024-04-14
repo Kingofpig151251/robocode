@@ -11,7 +11,7 @@ public class TaskTwo extends AdvancedRobot {
         MOVE_ALONG_WALL, // Move along wall - Move to the corner of current wall
         CORNER_TURN, // Corner turn - Turn the robot so that we can move along the next wall
         CHASING, // Chasing - When only one robot left, we chase the target
-        CRASH, // Crash - Unstuck myself when we hit something
+        REVERSE_DIRECTION, // Reverse direction - When we hit the other robot, we reverse the direction
     }
 
     private AdvancedEnemyBot target = new AdvancedEnemyBot();
@@ -74,6 +74,9 @@ public class TaskTwo extends AdvancedRobot {
 
     private void doMove() {
         // TODO: Move handling - use State Machine here
+        if (getOthers() == 1) {
+            moveState = MoveState.CHASING;
+        }
         switch (moveState) {
             case IDLE:
                 moveState = MoveState.FIND_WALL;
@@ -115,14 +118,21 @@ public class TaskTwo extends AdvancedRobot {
                 break;
             case CHASING:
                 break;
-            case CRASH:
-                moveState = MoveState.CORNER_TURN;
+            case REVERSE_DIRECTION:
+                setBack(moveAmount);
                 break;
         }
     }
 
     @Override
     public void onScannedRobot(ScannedRobotEvent event) {
+        if (target.none() || target.getDistance() < target.getDistance() - 70 ||
+                event.getName().equals(target.getName())) {
+
+            // track him using the NEW update method
+            target.update(event, this);
+            targetUpdated = true;
+        }
     }
 
     @Override
@@ -136,14 +146,16 @@ public class TaskTwo extends AdvancedRobot {
     public void onHitRobot(HitRobotEvent event) {
         // TODO: Collect information about the crash
         if (moveState != MoveState.FIND_WALL) {
-            moveState = MoveState.CRASH;
+            moveState = MoveState.REVERSE_DIRECTION;
         }
     }
 
     @Override
     public void onHitWall(HitWallEvent event) {
         // TODO: Collect information about the crash
-        moveState = MoveState.CRASH;
+        if (moveState == MoveState.MOVE_ALONG_WALL) {
+            moveState = MoveState.CORNER_TURN;
+        }
     }
 
     // computes the absolute bearing between two points
