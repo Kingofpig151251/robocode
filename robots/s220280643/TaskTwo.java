@@ -1,6 +1,7 @@
 package s220280643;
 
 import robocode.*;
+import java.awt.geom.Point2D;
 
 public class TaskTwo extends AdvancedRobot {
 
@@ -9,11 +10,10 @@ public class TaskTwo extends AdvancedRobot {
         FIND_WALL, // Find wall - Move to the nearest wall
         MOVE_ALONG_WALL, // Move along wall - Move to the corner of current wall
         CORNER_TURN, // Corner turn - Turn the robot so that we can move along the next wall
-        CHASEING, // Chasing - When only one robot left, we chase the target
+        CHASING, // Chasing - When only one robot left, we chase the target
         CRASH, // Crash - Unstuck myself when we hit something
     }
 
-    private MeleeRadar meleeRadar =new MeleeRadar(this);
     private AdvancedEnemyBot target = new AdvancedEnemyBot();
     private boolean targetUpdated;
     private MoveState moveState = MoveState.IDLE;
@@ -40,9 +40,8 @@ public class TaskTwo extends AdvancedRobot {
     }
 
     private void doRadar() {
-        // TODO: Keep turning radar for onScannedRobot events
         if (target.none()) {
-            setTurnRadarLeft(360);
+            setTurnRadarRight(360);
         } else {
             // oscillate the radar
             double turn = getHeading() - getRadarHeading() + target.getBearing();
@@ -54,11 +53,22 @@ public class TaskTwo extends AdvancedRobot {
 
     private void doGun() {
         // TODO: If target is updated, adjust gun turn and fire bullet when possible
-        if (targetUpdated) {
-            double turn = getHeading() - getGunHeading() + target.getBearing();
-            setTurnGunRight(normalizeBearing(turn));
-            if (getGunHeat() == 0 && Math.abs(getGunTurnRemaining()) < 10 )
-                setFire(Math.min(400 / target.getDistance(), 3));
+        if (target.none())
+            return;
+
+        double firePower = Math.min(400 / target.getDistance(), 3);
+
+        if (targetUpdated) { // turn gun only when the enemy is recently updated
+            double bulletSpeed = 20 - firePower * 3;
+            long time = (long) (target.getDistance() / bulletSpeed);
+            double futureX = target.getFutureX(time);
+            double futureY = target.getFutureY(time);
+            double absDeg = absoluteBearing(getX(), getY(), futureX, futureY);
+            setTurnGunRight(normalizeBearing(absDeg - getGunHeading()));
+        }
+
+        if (getGunHeat() == 0 && Math.abs(getGunTurnRemaining()) < 10) {
+            setFire(firePower);
         }
     }
 
@@ -103,7 +113,7 @@ public class TaskTwo extends AdvancedRobot {
                     target.reset();
                 }
                 break;
-            case CHASEING:
+            case CHASING:
                 break;
             case CRASH:
                 moveState = MoveState.CORNER_TURN;
@@ -113,12 +123,6 @@ public class TaskTwo extends AdvancedRobot {
 
     @Override
     public void onScannedRobot(ScannedRobotEvent event) {
-        // TODO: Scan handling
-        // Update existing target, or switch target based on distance (closer)
-        if ((target.none() || event.getDistance() < target.getDistance())) {
-            target.update(event, this);
-            targetUpdated = true;
-        }
     }
 
     @Override
@@ -142,6 +146,28 @@ public class TaskTwo extends AdvancedRobot {
         moveState = MoveState.CRASH;
     }
 
+    // computes the absolute bearing between two points
+    double absoluteBearing(double x1, double y1, double x2, double y2) {
+        double xo = x2 - x1;
+        double yo = y2 - y1;
+        double hyp = Point2D.distance(x1, y1, x2, y2);
+        double arcSin = Math.toDegrees(Math.asin(xo / hyp));
+        double bearing = 0;
+
+        if (xo > 0 && yo > 0) { // both pos: lower-Left
+            bearing = arcSin;
+        } else if (xo < 0 && yo > 0) { // x neg, y pos: lower-right
+            bearing = 360 + arcSin; // arcsin is negative here, actually 360 - ang
+        } else if (xo > 0 && yo < 0) { // x pos, y neg: upper-left
+            bearing = 180 - arcSin;
+        } else if (xo < 0 && yo < 0) { // both neg: upper-right
+            bearing = 180 - arcSin; // arcsin is negative here, actually 180 + ang
+        }
+
+        return bearing;
+    }
+
+    // normalizes a bearing to between +180 and -180
     double normalizeBearing(double angle) {
         while (angle > 180)
             angle -= 360;
