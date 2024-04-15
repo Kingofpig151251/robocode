@@ -32,7 +32,7 @@ public class TaskTwo extends AdvancedRobot {
         setAdjustRadarForGunTurn(true);
         setAdjustGunForRobotTurn(true);
         moveAmount = Math.max(getBattleFieldWidth(), getBattleFieldHeight());
-        while (true) {
+        while (true) {           
             doRadar();
             doGun();
             doMove();
@@ -132,13 +132,8 @@ public class TaskTwo extends AdvancedRobot {
                 break;
             case REVERSE_DIRECTION:
                 System.out.println("Reverse direction");
-                if (moveState == MoveState.FIND_WALL) {
-                    setBack(30);
-                    moveState = MoveState.FIND_WALL;
-                } else {
                     moveDirection *= -1;
                     moveState = MoveState.MOVE_ALONG_WALL;
-                }
                 break;
         }
     }
