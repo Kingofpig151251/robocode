@@ -1,7 +1,8 @@
-package s220280643;
+package s220280643.TaskOne;
 
-import java.awt.Color;
 import robocode.*;
+import java.awt.Color;
+import s220280643.AdvancedEnemyBot;
 
 public class TaskOne extends AdvancedRobot {
 

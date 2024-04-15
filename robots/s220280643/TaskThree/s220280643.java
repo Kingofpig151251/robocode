@@ -1,11 +1,12 @@
-package s220280643;
+package s220280643.TaskThree;
 
 import robocode.*;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
+import s220280643.AdvancedEnemyBot;
 
-public class TaskTwo extends AdvancedRobot {
+public class s220280643 extends AdvancedRobot {
 
     private enum MoveState {
         IDLE, // Control state - Used to select which movement action to perform
