@@ -1,7 +1,6 @@
 package s220280643;
 
-import java.awt.geom.Point2D;
-
+import java.awt.Color;
 import robocode.*;
 
 public class TaskOne extends AdvancedRobot {
@@ -14,9 +13,9 @@ public class TaskOne extends AdvancedRobot {
 
     @Override
     public void run() {
+        setColors(Color.PINK, Color.BLUE, Color.GRAY);
         setAdjustRadarForGunTurn(true);
         setAdjustGunForRobotTurn(false);
-
         while (true) {
             doRadar();
             doGun();
