@@ -32,7 +32,7 @@ public class TaskTwo extends AdvancedRobot {
         setAdjustRadarForGunTurn(true);
         setAdjustGunForRobotTurn(true);
         moveAmount = Math.max(getBattleFieldWidth(), getBattleFieldHeight());
-        while (true) {           
+        while (true) {
             doRadar();
             doGun();
             doMove();
@@ -132,8 +132,8 @@ public class TaskTwo extends AdvancedRobot {
                 break;
             case REVERSE_DIRECTION:
                 System.out.println("Reverse direction");
-                    moveDirection *= -1;
-                    moveState = MoveState.MOVE_ALONG_WALL;
+                moveDirection *= -1;
+                moveState = MoveState.MOVE_ALONG_WALL;
                 break;
         }
     }
@@ -159,13 +159,17 @@ public class TaskTwo extends AdvancedRobot {
     @Override
     public void onHitRobot(HitRobotEvent event) {
         // TODO: Collect information about the crash
-        moveState = MoveState.REVERSE_DIRECTION;
+        if (moveState != MoveState.CHASING) {
+            moveState = MoveState.REVERSE_DIRECTION;
+        }
     }
 
     @Override
     public void onHitWall(HitWallEvent event) {
         // TODO: Collect information about the crash
-        moveState = MoveState.CORNER_TURN;
+        if (moveState != MoveState.CHASING) {
+            moveState = MoveState.CORNER_TURN;
+        }
     }
 
     // computes the absolute bearing between two points
