@@ -1,6 +1,8 @@
 package s220280643;
 
 import robocode.*;
+
+import java.awt.Color;
 import java.awt.geom.Point2D;
 
 public class TaskTwo extends AdvancedRobot {
@@ -20,11 +22,13 @@ public class TaskTwo extends AdvancedRobot {
     private double moveAmount;
     private boolean hasTurned = false;
     private byte radarDirection = 1;
+    private byte moveDirection = 1;
 
     // TODO: Add variables as needed
 
     @Override
     public void run() {
+        setColors(Color.PINK, Color.PINK, Color.PINK);
         setAdjustRadarForGunTurn(true);
         setAdjustGunForRobotTurn(true);
         moveAmount = Math.max(getBattleFieldWidth(), getBattleFieldHeight());
@@ -45,7 +49,7 @@ public class TaskTwo extends AdvancedRobot {
         } else {
             // oscillate the radar
             double turn = getHeading() - getRadarHeading() + target.getBearing();
-            turn += 30 * radarDirection;
+            turn += 10 * radarDirection;
             setTurnRadarRight(normalizeBearing(turn));
             radarDirection *= -1;
         }
@@ -103,23 +107,38 @@ public class TaskTwo extends AdvancedRobot {
                 setAhead(moveAmount);
                 break;
             case MOVE_ALONG_WALL:
-                setAhead(moveAmount);
+                System.out.println("Moving along wall");
+                setTurnLeft(getHeading() % 90);
+                setAhead(moveAmount * moveDirection);
                 break;
             case CORNER_TURN:
+                System.out.println("Corner turn");
                 if (!hasTurned) {
-                    setTurnRight(90);
+                    setTurnRight(90 * moveDirection);
                     hasTurned = true;
-                }
-                if (getTurnRemaining() == 0) {
-                    moveState = MoveState.MOVE_ALONG_WALL;
-                    hasTurned = false;
-                    target.reset();
+                } else if (hasTurned) {
+                    if (getTurnRemaining() == 0) {
+                        hasTurned = false;
+                        moveState = MoveState.MOVE_ALONG_WALL;
+                    }
                 }
                 break;
             case CHASING:
+                System.out.println("Chasing");
+                if (targetUpdated) {
+                    setTurnRight(normalizeBearing(normalizeBearing(target.getBearing())));
+                    setAhead(target.getDistance());
+                }
                 break;
             case REVERSE_DIRECTION:
-                setBack(moveAmount);
+                System.out.println("Reverse direction");
+                if (moveState == MoveState.FIND_WALL) {
+                    setBack(30);
+                    moveState = MoveState.FIND_WALL;
+                } else {
+                    moveDirection *= -1;
+                    moveState = MoveState.MOVE_ALONG_WALL;
+                }
                 break;
         }
     }
@@ -145,17 +164,13 @@ public class TaskTwo extends AdvancedRobot {
     @Override
     public void onHitRobot(HitRobotEvent event) {
         // TODO: Collect information about the crash
-        if (moveState != MoveState.FIND_WALL) {
-            moveState = MoveState.REVERSE_DIRECTION;
-        }
+        moveState = MoveState.REVERSE_DIRECTION;
     }
 
     @Override
     public void onHitWall(HitWallEvent event) {
         // TODO: Collect information about the crash
-        if (moveState == MoveState.MOVE_ALONG_WALL) {
-            moveState = MoveState.CORNER_TURN;
-        }
+        moveState = MoveState.CORNER_TURN;
     }
 
     // computes the absolute bearing between two points
