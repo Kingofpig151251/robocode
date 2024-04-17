@@ -1,4 +1,4 @@
-package s220280643;
+package LeungTungLam;
 
 import robocode.Robot;
 import robocode.ScannedRobotEvent;

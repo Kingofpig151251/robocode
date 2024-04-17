@@ -1,10 +1,9 @@
-package s220280643.TaskTwo;
+package LeungTungLam;
 
 import robocode.*;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
-import s220280643.AdvancedEnemyBot;
 
 public class TaskTwo extends AdvancedRobot {
 
