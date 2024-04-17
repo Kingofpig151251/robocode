@@ -1,9 +1,9 @@
-package LeungTungLam;
+package Task1;
 
 import robocode.*;
 import java.awt.Color;
 
-public class TaskOne extends AdvancedRobot {
+public class Wall_Killer extends AdvancedRobot {
 
     private AdvancedEnemyBot target = new AdvancedEnemyBot();
     private boolean targetUpdated;

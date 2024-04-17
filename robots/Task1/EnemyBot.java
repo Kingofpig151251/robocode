@@ -1,4 +1,4 @@
-package LeungTungLam;
+package Task1;
 
 import robocode.ScannedRobotEvent;
 

@@ -1,12 +1,11 @@
-package LeungTungLam;
+package s220280643;
 
 import robocode.*;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
-import s220280643.AdvancedEnemyBot;
 
-public class s220280643 extends AdvancedRobot {
+public class Piggy extends AdvancedRobot {
 
     private enum MoveState {
         CIRCLERC, // Circler - Circling the target

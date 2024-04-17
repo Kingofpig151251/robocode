@@ -1,11 +1,11 @@
-package LeungTungLam;
+package Task2;
 
 import robocode.*;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
 
-public class TaskTwo extends AdvancedRobot {
+public class Robot_FSM extends AdvancedRobot {
 
     private enum MoveState {
         IDLE, // Control state - Used to select which movement action to perform
